@@ -1,0 +1,35 @@
+_format_version: "1.1"
+
+consumers:
+- username: nexus
+
+keyauth_credentials:
+- consumer: nexus
+  # key: pass123
+  ttl: 60
+
+plugins:
+- name: key-auth
+  config: 
+    key_names:
+    - apikey
+    key_in_body: false
+    key_in_header: true
+    key_in_query: true
+    hide_credentials: false
+    run_on_preflight: true
+
+services:
+- name: sample
+  host: mocky
+  routes:
+  - name: mocky
+    paths:
+    - /mocky
+    - /v2/5ca725833400002c4876b363
+
+upstreams:
+- name: mocky
+  targets:
+    - target: www.mocky.io:80
+      # - target: www.mocky.io:80/v2/5ca725833400002c4876b363
